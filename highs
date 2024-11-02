@@ -1,0 +1,10 @@
+#!/bin/sh
+# reads a stream of numbers printing higher numbers as encountered
+max_last=0
+while read -r max_next;do
+	echo "$max_next" | grep '^[[:digit:]]\+$' >/dev/null 2>&1 # for the BRE
+	[ "$?" = "0" ] || continue                                # NaN
+	[ "$max_next" -le "$max_last" ] && continue               # not a new max
+	max_last="$max_next"
+	echo "$max_last"
+done
